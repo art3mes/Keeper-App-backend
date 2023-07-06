@@ -13,6 +13,16 @@ const corsOptions ={
 }
 app.use(cors(corsOptions));
 
+app.get("/",function(req,res){
+    res.send("yes")
+}); 
+
+app.post("/data", function(req,res){
+    const title=req.body.title;
+    const content=req.body.content;
+    console.log(title," ",content);
+});
+
 app.listen(4000,function(){
     console.log("server is running");
 });

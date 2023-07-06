@@ -2,12 +2,15 @@ import React, {useState} from "react";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Fab from '@mui/material/Fab';
 import Zoom from '@mui/material/Zoom';
+import axios from 'axios';
 
 function CreateArea(props) {
     const [note,
         setNote] = useState({title: "", content: ""});
     const [isCLicked,
         setClick] = useState(false);
+
+
 
     function handleChange(event) {
         const {name, value} = event.target;
@@ -22,10 +25,24 @@ function CreateArea(props) {
     function addNote(event) {
         if (note.title !== "") {
             props.onAdd(note);
+            
+            sendData();
         }
         setNote({title: "", content: ""});
         event.preventDefault();
     }
+    async function sendData() {
+        try {
+          const res = await axios.post("http://localhost:4000/data", {
+            title: note.title,
+            content: note.content
+          });
+          console.log(res);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      
     function handleClick() {
         setClick(true);
     }
