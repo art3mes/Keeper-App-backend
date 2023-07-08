@@ -2,13 +2,16 @@ const express = require("express");
 const cors =require ("cors");           //to enable access from multiple domains
 const bodyParser =require("body-parser");
 const mongoose=require("mongoose");
+require('dotenv').config();
 
 const app=express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 
-mongoose.connect('mongodb+srv://admin-arty:admin-arty@cluster0.569qwxi.mongodb.net/KeeperApp');
+mongoose.connect(process.env.DB_URL)
+.then(()=>console.log("DB connected"))
+.catch(err=>console.log(err));
 const noteSchema={                               
     title:String,
     content:String
@@ -44,6 +47,6 @@ app.post("/data", function(req,res){
     });                   
 });
 
-app.listen(4000,function(){
+app.listen(process.env.ROOT||4000,function(){
     console.log("server is running");
 });
