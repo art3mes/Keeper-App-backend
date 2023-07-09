@@ -1,5 +1,5 @@
 const express = require("express");
-const cors =require ("cors");           //to enable access from multiple domains
+//const cors =require ("cors");           //to enable access from multiple domains
 const bodyParser =require("body-parser");
 const mongoose=require("mongoose");
 require('dotenv').config();
@@ -18,16 +18,25 @@ const noteSchema={
 };
 
 const Note=mongoose.model('Note',noteSchema);
+let noteArray=[];
 
-const corsOptions ={
-    origin:'*',
-    credentials:true,
-    optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+// const corsOptions ={
+//     origin:'*',
+//     credentials:true,
+//     optionSuccessStatus:200
+// }
+// app.use(cors(corsOptions));
 
 app.get("/",function(req,res){
-    res.send("yes")
+    Note.find().then(function(foundNote){       //printing the items stored in the backend to the console
+        //console.log(foundNote);
+        const foundNoteJSON = JSON.stringify(foundNote);
+        //console.log(foundNoteJSON)
+        noteArray=foundNoteJSON;
+        res.send(noteArray);
+    });
+    //console.log(noteArray);
+    
 }); 
 
 app.post("/data", function(req,res){
