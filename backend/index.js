@@ -1,5 +1,5 @@
 const express = require("express");
-//const cors =require ("cors");           //to enable access from multiple domains
+const cors =require ("cors");           //to enable access from multiple domains
 const bodyParser =require("body-parser");
 const mongoose=require("mongoose");
 require('dotenv').config();
@@ -20,12 +20,12 @@ const noteSchema={
 const Note=mongoose.model('Note',noteSchema);
 let noteArray=[];
 
-// const corsOptions ={
-//     origin:'*',
-//     credentials:true,
-//     optionSuccessStatus:200
-// }
-// app.use(cors(corsOptions));
+const corsOptions ={
+    origin:'*',
+    credentials:true,
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 
 app.get("/",function(req,res){
     Note.find().then(function(foundNote){       //printing the items stored in the backend to the console
@@ -39,7 +39,7 @@ app.get("/",function(req,res){
     
 }); 
 
-app.post("/data", function(req,res){
+app.post("/", function(req,res){
     const titleName=req.body.title;
     const contentData=req.body.content;
     //console.log(titleName," ",contentData);
@@ -50,7 +50,9 @@ app.post("/data", function(req,res){
                title:titleName,
                content:contentData
             });
-            note.save();  //saving the made list to db
+            note.save()  //saving the made list to db
+            .then(()=>console.log("data saved"))
+            .catch(err=>console.log(err));
             res.redirect("/"); //redirect to current directory
         }
     });                   

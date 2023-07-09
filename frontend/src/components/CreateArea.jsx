@@ -33,7 +33,7 @@ function CreateArea(props) {
     }
     async function sendData() {
         try {
-          const res = await axios.post("http://localhost:4000/data", {
+          const res = await axios.post("http://localhost:4000/", {
             title: note.title,
             content: note.content
           });

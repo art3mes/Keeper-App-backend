@@ -6,12 +6,18 @@ import CreateArea from "./CreateArea";
 
 function App() {
   const [notes, setNotes] = useState([]); //empty array
-
+  //const baseURL="http://localhost:4000/";
   function addNote(newNote) {
     setNotes((preValue) => {
       return [...preValue, newNote];
     });
   }
+  // React.useEffect(() => {
+  //   axios.get(baseURL).then((response) => {
+  //     setNotes(response.data);
+  //   });
+  // }, []);
+
   function deleteNote(id) {
     setNotes((preValues) => {
       return preValues.filter((noteItem, index) => {
