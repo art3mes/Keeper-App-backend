@@ -14,9 +14,10 @@ function Note(props) {
     }
   }
   function deleteNote() {
-    //props.onDeleteProp(props.id);
+    
     console.log(props.title); 
     sendData();
+    props.onDeleteProp(props.id);
   }
   return (
     <div className="note">

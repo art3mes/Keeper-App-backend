@@ -61,6 +61,13 @@ app.post("/", function(req,res){
 app.post("/delete",function(req,res){
     const title=req.body.title;
     console.log(title);
+
+    Note.findOneAndDelete({title:title}).then((deletedDocument)=>{            //to delete one element
+    console.log("Deleted document: ",deletedDocument);
+    })
+    .catch((error)=>{
+    console.error("Error deleting document: ",error);
+    });
 });
 
 app.listen(process.env.ROOT||4000,function(){
