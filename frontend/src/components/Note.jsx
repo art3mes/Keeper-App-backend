@@ -1,9 +1,22 @@
 import React from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from "axios";
 
 function Note(props) {
+  async function sendData() {
+    try {
+      const res = await axios.post("http://localhost:4000/delete", {
+        title: props.title
+      });
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   function deleteNote() {
-    props.onDeleteProp(props.id);
+    //props.onDeleteProp(props.id);
+    console.log(props.title); 
+    sendData();
   }
   return (
     <div className="note">

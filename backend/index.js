@@ -58,6 +58,11 @@ app.post("/", function(req,res){
     });                   
 });
 
+app.post("/delete",function(req,res){
+    const title=req.body.title;
+    console.log(title);
+});
+
 app.listen(process.env.ROOT||4000,function(){
     console.log("server is running");
 });
