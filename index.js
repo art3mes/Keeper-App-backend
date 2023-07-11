@@ -3,11 +3,13 @@ const cors =require ("cors");           //to enable access from multiple domains
 const bodyParser =require("body-parser");
 const mongoose=require("mongoose");
 require('dotenv').config();
+    
 
 const app=express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-
+app.set('view engine','ejs');            
+app.use(express.static("public"));   
 
 mongoose.connect(process.env.DB_URL)
 .then(()=>console.log("DB connected"))
@@ -26,8 +28,11 @@ const corsOptions ={
     optionSuccessStatus:200
 }
 app.use(cors(corsOptions));
-
 app.get("/",function(req,res){
+    res.render("home");
+});
+app.get("/data",function(req,res){
+   
     Note.find().then(function(foundNote){       //printing the items stored in the backend to the console
         //console.log(foundNote);
         const foundNoteJSON = JSON.stringify(foundNote);
